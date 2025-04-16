@@ -1,7 +1,7 @@
 export const tasks = [
     {
       id: 1,
-      name: 'Buy groceries',
+      taskName: 'Buy groceries',
       description: 'Milk, eggs, bread',
       dueDate: '2025-04-20',
       isCompleted: false,
@@ -10,7 +10,7 @@ export const tasks = [
     },
     {
       id: 2,
-      name: 'Finish React Project',
+      taskName: 'Finish React Project',
       description: 'Implement CRUD features and localStorage',
       dueDate: '2025-04-22',
       isCompleted: false,
@@ -19,7 +19,7 @@ export const tasks = [
     },
     {
       id: 3,
-      name: 'Workout Session',
+      taskName: 'Workout Session',
       description: 'Cardio and strength training at the gym',
       dueDate: '2025-04-21',
       isCompleted: false,
@@ -28,7 +28,7 @@ export const tasks = [
     },
     {
       id: 4,
-      name: 'Call Doctor',
+      taskName: 'Call Doctor',
       description: 'Schedule appointment for annual check-up',
       dueDate: '2025-04-19',
       isCompleted: false,
@@ -37,7 +37,7 @@ export const tasks = [
     },
     {
       id: 5,
-      name: 'Read a book',
+      taskName: 'Read a book',
       description: 'Finish reading Chapter 5 of “Atomic Habits”',
       dueDate: '2025-04-25',
       isCompleted: false,
