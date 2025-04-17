@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { tasks } from "../../assets/taskData";
 
 // role: this component is to add or edit a task
 
@@ -19,7 +20,6 @@ const TaskForm = () => {
     const [task, setTask] = useState(emptyTask)
     const [status, setStatus] = useState(STATUS.IDLE)
     const [touched, setTouched] = useState({})
-    const [saveError, setSaveError] = useState(null);
 
     // form validation
     const errors = getErrors(task);
@@ -31,15 +31,14 @@ const TaskForm = () => {
         event.preventDefault();
         setStatus(STATUS.SUBMITTING);
         if (isValid){
-            console.log('task submitted') 
+            tasks.push(task)
+            localStorage.setItem("tasks",JSON.stringify(tasks))
             setStatus(STATUS.COMPLETED)  
         } else {
             setStatus(STATUS.SUBMITTED)
         }
     }    
-
     function handleChange(event){
-        console.log(event.target.id)
         setTask((prevTask) => {
             return {
                 ...prevTask,
@@ -47,7 +46,6 @@ const TaskForm = () => {
             }
         })  
     }
-
     function handleTouched(event){
         setTouched((prevTask) => {
            return {
@@ -56,7 +54,6 @@ const TaskForm = () => {
            } 
         });
     }
-
     function getErrors(demoTask){
         const result = {};
         if (!demoTask.taskName) {result.taskName = "A Task title is required"};
@@ -69,7 +66,6 @@ const TaskForm = () => {
         }
         return result;
     }
-
     function isFutureDate(date_string){
         const today = new Date();
         const selectDate = new Date(date_string);
@@ -79,12 +75,10 @@ const TaskForm = () => {
         return selectDate > today
     }
 
+
     if (status === STATUS.COMPLETED) {
         return <h1>SUCCESSFUL: RETURN TO TASK LIST COMPONENT</h1>
     }
-
-    
-
     return (
         <div className="container mt-5">
             <h2 className="mb-4">Create New Task</h2>
