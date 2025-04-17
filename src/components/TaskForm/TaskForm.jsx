@@ -19,6 +19,7 @@ const TaskForm = () => {
     const [task, setTask] = useState(emptyTask)
     const [status, setStatus] = useState(STATUS.IDLE)
     const [touched, setTouched] = useState({})
+    const [saveError, setSaveError] = useState(null);
 
     // form validation
     const errors = getErrors(task);
@@ -48,7 +49,12 @@ const TaskForm = () => {
     }
 
     function handleTouched(event){
-
+        setTouched((prevTask) => {
+           return {
+            ...prevTask,
+            [event.target.id]:true
+           } 
+        });
     }
 
     function getErrors(demoTask){
@@ -77,6 +83,8 @@ const TaskForm = () => {
         return <h1>SUCCESSFUL: RETURN TO TASK LIST COMPONENT</h1>
     }
 
+    
+
     return (
         <div className="container mt-5">
             <h2 className="mb-4">Create New Task</h2>
@@ -95,25 +103,35 @@ const TaskForm = () => {
             
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
-                <label htmlFor="taskName" className="form-label">Task Name</label>
-                <input type="text" className="form-control" id="taskName" placeholder="Enter task name" 
-                        onChange={handleChange}
-                        onBlur={handleTouched}/>
+                    <label htmlFor="taskName" className="form-label">Task Name</label>
+                    <input type="text" className="form-control" id="taskName" placeholder="Enter task name" 
+                            onChange={handleChange}
+                            onBlur={handleTouched}/>
+                    <p role="alert" style={{color:'red'}}>
+                        {(touched.taskName || status === STATUS.SUBMITTED) && errors.taskName}
+                    </p>
                 </div>
 
                 <div className="mb-3">
-                <label htmlFor="taskDescription" className="form-label">Description</label>
-                <textarea className="form-control" id="description" rows="3" placeholder="Enter task description"
-                           onChange={handleChange}
-                           onBlur={handleTouched}></textarea>
+                    <label htmlFor="taskDescription" className="form-label">Description</label>
+                    <textarea className="form-control" id="description" rows="3" placeholder="Enter task description"
+                            onChange={handleChange}
+                            onBlur={handleTouched}></textarea>
+                    <p role="alert" style={{color:'red'}}>
+                        {(touched.description || status === STATUS.SUBMITTED) && errors.description}
+                    </p>
                 </div>
 
                 <div className="mb-3">
-                <label htmlFor="dueDate" className="form-label">Due Date</label>
-                <input type="date" className="form-control" id="dueDate"
-                        onChange={handleChange}
-                        onBlur={handleTouched}
-                        />
+                    <label htmlFor="dueDate" className="form-label">Due Date</label>
+                    <input type="date" className="form-control" id="dueDate"
+                            onChange={handleChange}
+                            onBlur={handleTouched}
+                            />
+                    <p role="alert" style={{color:'red'}}>
+                        {(touched.dueDate || status === STATUS.SUBMITTED) && errors.dueDate}
+                        {(touched.dueDate || status === STATUS.SUBMITTED) && errors.isFuture}
+                    </p>
                 </div>
 
                 <button type="submit" className="btn btn-primary">Submit Task</button>
