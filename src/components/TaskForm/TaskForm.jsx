@@ -30,32 +30,90 @@ const TaskForm = () => {
         event.preventDefault();
         setStatus(STATUS.SUBMITTING);
         if (isValid){
-            
+            console.log('task submitted') 
+            setStatus(STATUS.COMPLETED)  
+        } else {
+            setStatus(STATUS.SUBMITTED)
         }
-
     }    
 
-    function getErrors(){
-        return ""
+    function handleChange(event){
+        console.log(event.target.id)
+        setTask((prevTask) => {
+            return {
+                ...prevTask,
+                [event.target.id]: event.target.value
+            }
+        })  
+    }
+
+    function handleTouched(event){
+
+    }
+
+    function getErrors(demoTask){
+        const result = {};
+        if (!demoTask.taskName) {result.taskName = "A Task title is required"};
+        if (!demoTask.description) {result.description="A Task description is required"}
+        
+        if (!demoTask.dueDate) 
+            {result.dueDate="A Due Date is required"}
+        else if (!isFutureDate(demoTask.dueDate)) {
+            result.isFuture = "You can only select a future date as your due date"
+        }
+        return result;
+    }
+
+    function isFutureDate(date_string){
+        const today = new Date();
+        const selectDate = new Date(date_string);
+
+        today.setHours(0)
+
+        return selectDate > today
+    }
+
+    if (status === STATUS.COMPLETED) {
+        return <h1>SUCCESSFUL: RETURN TO TASK LIST COMPONENT</h1>
     }
 
     return (
         <div className="container mt-5">
             <h2 className="mb-4">Create New Task</h2>
+            {!isValid && status === STATUS.SUBMITTED && (
+                <div role="alert" style={{color:'red'}}>
+                    <p>The following are required for a successful submission:</p>
+                    <ul>
+                        {
+                            Object.keys(errors).map((key) => {
+                                return <li key={key}>{errors[key]}</li>
+                            })
+                        }
+                    </ul>
+                </div>
+            )}
+            
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                 <label htmlFor="taskName" className="form-label">Task Name</label>
-                <input type="text" className="form-control" id="taskName" placeholder="Enter task name"/>
+                <input type="text" className="form-control" id="taskName" placeholder="Enter task name" 
+                        onChange={handleChange}
+                        onBlur={handleTouched}/>
                 </div>
 
                 <div className="mb-3">
                 <label htmlFor="taskDescription" className="form-label">Description</label>
-                <textarea className="form-control" id="taskDescription" rows="3" placeholder="Enter task description"></textarea>
+                <textarea className="form-control" id="description" rows="3" placeholder="Enter task description"
+                           onChange={handleChange}
+                           onBlur={handleTouched}></textarea>
                 </div>
 
                 <div className="mb-3">
                 <label htmlFor="dueDate" className="form-label">Due Date</label>
-                <input type="date" className="form-control" id="dueDate"/>
+                <input type="date" className="form-control" id="dueDate"
+                        onChange={handleChange}
+                        onBlur={handleTouched}
+                        />
                 </div>
 
                 <button type="submit" className="btn btn-primary">Submit Task</button>
