@@ -16,7 +16,7 @@ const TaskOneLiner = ({id, taskName, dueDate, isCompleted}) => {
                 <button className="btn btn-warning btn-sm">Edit</button>
                 <button className="btn btn-danger btn-sm">Delete</button>
                 <div className="form-check form-switch">
-                <input className="form-check-input" type="checkbox" id="completedToggle1"/>
+                <input className="form-check-input" type="checkbox" id={`completedToggle${id}`}/>
                 <label className="form-check-label" htmlFor="completedToggle1">Completed</label>
                 </div>
             </div>

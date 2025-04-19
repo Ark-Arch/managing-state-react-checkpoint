@@ -1,9 +1,20 @@
-import React from 'react'
+import {React, useState, useEffect} from 'react'
 import TaskOneLiner from './TaskOneLiner'
 import { Link } from 'react-router-dom'
 
 
-const TaskList = ({tasks}) => {
+const TaskList = () => {
+    const [tasks, setTasks] = useState([])
+
+    useEffect(()=>{
+        const savedTasks = retrieveFromLocalStorage()
+        setTasks(savedTasks)
+    }, [])
+
+    function retrieveFromLocalStorage(){
+        return JSON.parse(localStorage.getItem('my-tasks')) || [];
+    }
+
     return (
         <>
             <div className="container my-5">

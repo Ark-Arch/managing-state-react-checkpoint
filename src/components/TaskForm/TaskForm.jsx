@@ -1,7 +1,6 @@
 import { useState } from "react"
-import { tasks } from "../../assets/taskData";
 import { Link } from "react-router-dom";
-
+import TaskList from "../TaskList/TaskList";
 
 // role: this component is to add or edit a task
 
@@ -18,7 +17,7 @@ const STATUS = {
     COMPLETED: "COMPLETED"
 }
 
-const TaskForm = () => {
+const TaskForm = ({appTasks}) => {
     const [task, setTask] = useState(emptyTask)
     const [status, setStatus] = useState(STATUS.IDLE)
     const [touched, setTouched] = useState({})
@@ -33,9 +32,15 @@ const TaskForm = () => {
         event.preventDefault();
         setStatus(STATUS.SUBMITTING);
         if (isValid){
-            tasks.push(task)
-            localStorage.setItem("tasks",JSON.stringify(tasks))
-            setStatus(STATUS.COMPLETED)  
+            task.id = appTasks.length + 1
+            console.log(appTasks)
+            task.isCompleted = false
+            task.createdAt = Date.now()
+            task.updatedAt = Date.now()
+
+            appTasks.push(task)
+            localStorage.setItem("my-tasks",JSON.stringify(appTasks))
+            setStatus(STATUS.COMPLETED)
         } else {
             setStatus(STATUS.SUBMITTED)
         }
@@ -79,7 +84,7 @@ const TaskForm = () => {
 
 
     if (status === STATUS.COMPLETED) {
-        return <h1>SUCCESSFUL: RETURN TO TASK LIST COMPONENT</h1>
+        return <TaskList/>
     }
     return (
         <div className="container mt-5">
@@ -113,7 +118,7 @@ const TaskForm = () => {
                 </div>
 
                 <div className="mb-3">
-                    <label htmlFor="taskDescription" className="form-label">Description</label>
+                    <label className="form-label">Description</label>
                     <textarea className="form-control" id="description" rows="3" placeholder="Enter task description"
                             onChange={handleChange}
                             onBlur={handleTouched}></textarea>
