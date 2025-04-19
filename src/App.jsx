@@ -3,6 +3,8 @@ import TaskForm from './components/TaskForm/TaskForm'
 import TaskList from './components/TaskList/TaskList'
 import { Routes, Route } from 'react-router-dom'
 
+import { TaskContext } from './context/taskContext'
+
 import { tasks } from './assets/taskData'
 
 function App() {
@@ -18,10 +20,12 @@ function App() {
 
     return (
         <>
-            <Routes>
-                <Route path='/task-list' element={<TaskList tasks={appTasks}/>}/>
-                <Route path='/add-task' element={<TaskForm appTasks={appTasks}/>}/>
-            </Routes>
+            <TaskContext.Provider value={{appTasks, setAppTasks}}>
+                <Routes>
+                    <Route path='/task-list' element={<TaskList/>}/>
+                    <Route path='/add-task' element={<TaskForm/>}/>
+                </Routes>
+            </TaskContext.Provider>
         </>
     )
 }

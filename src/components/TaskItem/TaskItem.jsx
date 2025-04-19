@@ -1,5 +1,6 @@
 import React from 'react'
-
+import { useContext } from 'react'
+import { TaskContext } from '../../context/taskContext'
 const TaskItem = ({task}) => {
 
     const id = task.id
@@ -15,6 +16,11 @@ const TaskItem = ({task}) => {
         today.setHours(0)
 
         return selectDate < today
+    }
+
+    function handleToggle(event){
+        const toggleValue = event.target.checked
+        
     }
 
     return (
@@ -36,8 +42,8 @@ const TaskItem = ({task}) => {
                 <button className="btn btn-warning btn-sm">Edit</button>
                 <button className="btn btn-danger btn-sm">Delete</button>
                 <div className="form-check form-switch">
-                <input className="form-check-input" type="checkbox" id={`completedToggle${id}`}/>
-                <label className="form-check-label" htmlFor="completedToggle1">Completed</label>
+                <input className="form-check-input" type="checkbox" id={`completedToggle${id}`}
+                        onChange={handleToggle}/>
                 </div>
             </div>
         </div>

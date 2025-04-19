@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Link } from "react-router-dom";
-import TaskList from "../TaskList/TaskList";
+import { useContext } from "react";
+import { TaskContext } from "../../context/taskContext";
 
 // role: this component is to add or edit a task
 
@@ -17,7 +18,9 @@ const STATUS = {
     COMPLETED: "COMPLETED"
 }
 
-const TaskForm = ({appTasks}) => {
+const TaskForm = () => {
+    const {appTasks, setAppTasks} = useContext(TaskContext)
+
     const [task, setTask] = useState(emptyTask)
     const [status, setStatus] = useState(STATUS.IDLE)
     const [touched, setTouched] = useState({})
@@ -33,12 +36,11 @@ const TaskForm = ({appTasks}) => {
         setStatus(STATUS.SUBMITTING);
         if (isValid){
             task.id = appTasks.length + 1
-            console.log(appTasks)
             task.isCompleted = false
             task.createdAt = Date.now()
             task.updatedAt = Date.now()
 
-            appTasks.push(task)
+            setAppTasks([...appTasks, task])
             localStorage.setItem("my-tasks",JSON.stringify(appTasks))
             setStatus(STATUS.COMPLETED)
         } else {
