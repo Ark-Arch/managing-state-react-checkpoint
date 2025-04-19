@@ -1,5 +1,5 @@
 import {React, useState, useEffect} from 'react'
-import TaskOneLiner from './TaskOneLiner'
+import TaskItem from '../TaskItem/TaskItem'
 import { Link } from 'react-router-dom'
 
 
@@ -27,11 +27,8 @@ const TaskList = () => {
                     {
                         tasks.map((task) => {
                             return(
-                            <TaskOneLiner key={task.id} 
-                                        taskName={task.taskName} 
-                                        dueDate={task.dueDate} 
-                                        id={task.id} 
-                                        isCompleted={task.isCompleted}/>
+                            <TaskItem key={task.id} 
+                                          task={task}/>
                             )
                         })
                     }

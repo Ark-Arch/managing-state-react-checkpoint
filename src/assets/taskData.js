@@ -21,7 +21,7 @@ export const tasks = [
       id: 3,
       taskName: 'Workout Session',
       description: 'Cardio and strength training at the gym',
-      dueDate: '2025-04-21',
+      dueDate: '2025-04-01',
       isCompleted: false,
       createdAt: 1710001000000,
       updatedAt: 1710001200000

@@ -84,7 +84,7 @@ const TaskForm = ({appTasks}) => {
 
 
     if (status === STATUS.COMPLETED) {
-        return <TaskList/>
+        return <h1>TASK SUCCESSFULLY ADDED: <Link to='/task-list'>Back</Link></h1>
     }
     return (
         <div className="container mt-5">
