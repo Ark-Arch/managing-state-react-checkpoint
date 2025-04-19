@@ -6,7 +6,11 @@ const TaskList = ({tasks}) => {
     return (
         <>
             <div className="container my-5">
-            <h3 className="mb-4">My To-Do List</h3>
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <h3 className="mb-0">My To-Do List</h3>
+                <button className="btn btn-primary px-4">Add</button>
+            </div>
+            
             <div className="list-group">
                 {
                     tasks.map((task) => {
