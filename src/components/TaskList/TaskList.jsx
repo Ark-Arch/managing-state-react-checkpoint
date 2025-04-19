@@ -1,5 +1,6 @@
 import React from 'react'
 import TaskOneLiner from './TaskOneLiner'
+import { Link } from 'react-router-dom'
 
 
 const TaskList = ({tasks}) => {
@@ -8,7 +9,7 @@ const TaskList = ({tasks}) => {
             <div className="container my-5">
             <div className="d-flex justify-content-between align-items-center mb-4">
                 <h3 className="mb-0">My To-Do List</h3>
-                <button className="btn btn-primary px-4">Add</button>
+                <Link to='/add-task'><button className="btn btn-primary px-4">Add</button></Link>
             </div>
             
             <div className="list-group">
