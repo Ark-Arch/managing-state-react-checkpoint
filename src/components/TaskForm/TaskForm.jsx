@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { tasks } from "../../assets/taskData";
+import { Link } from "react-router-dom";
+
 
 // role: this component is to add or edit a task
 
@@ -81,7 +83,11 @@ const TaskForm = () => {
     }
     return (
         <div className="container mt-5">
-            <h2 className="mb-4">Create New Task</h2>
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <h2 className="mb-4">Create New Task</h2>
+                <Link to='/task-list'><button className="btn btn-primary px-4">Back</button></Link>
+            </div>
+
             {!isValid && status === STATUS.SUBMITTED && (
                 <div role="alert" style={{color:'red'}}>
                     <p>The following are required for a successful submission:</p>
