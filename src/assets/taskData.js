@@ -31,7 +31,7 @@ export const tasks = [
       taskName: 'Call Doctor',
       description: 'Schedule appointment for annual check-up',
       dueDate: '2025-04-19',
-      isCompleted: false,
+      isCompleted: true,
       createdAt: 1710001500000,
       updatedAt: 1710001500000
     },

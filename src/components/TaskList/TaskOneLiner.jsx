@@ -2,13 +2,23 @@ import React from 'react'
 
 const TaskOneLiner = ({id, taskName, dueDate, isCompleted}) => {
 
+
+    function isDeadlinePassed (date_string){
+        const today = new Date();
+        const selectDate = new Date(date_string);
+
+        today.setHours(0)
+
+        return selectDate < today
+    }
+
     return (
         <div className="list-group-item d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between py-3 border rounded shadow-sm mb-3">
             <div className="d-flex align-items-center gap-3 flex-wrap flex-md-nowrap">
                 <span className="badge bg-primary px-3 py-2">#{id}</span>
                 <div>
-                <h5 className={`mb-1 ${isCompleted ? "text-decoration-line-through text-success":""}`}>{taskName}</h5>
-                <small className="text-muted">Due: {dueDate}</small>
+                <h5 className={`mb-1 ${isCompleted ? "text-decoration-line-through text-success":isDeadlinePassed(dueDate)?"text-decoration-line-through text-danger":""}`}>{taskName}</h5>
+                <small className="text-muted">Due: {!isDeadlinePassed(dueDate)?dueDate:`date already passed (${dueDate})`}</small>
                 </div>
             </div>
             <div className="d-flex align-items-center gap-2 mt-3 mt-md-0">
