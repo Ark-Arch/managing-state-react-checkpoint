@@ -4,7 +4,7 @@ export const tasks = [
       taskName: 'Buy groceries',
       description: 'Milk, eggs, bread',
       dueDate: '2025-04-20',
-      isCompleted: false,
+      isCompleted: true,
       createdAt: 1710000000000,
       updatedAt: 1710000000000
     },

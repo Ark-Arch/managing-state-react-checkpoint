@@ -1,13 +1,13 @@
 import React from 'react'
 
-const TaskOneLiner = ({id, taskName, dueDate}) => {
+const TaskOneLiner = ({id, taskName, dueDate, isCompleted}) => {
 
     return (
         <div className="list-group-item d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between py-3 border rounded shadow-sm mb-3">
             <div className="d-flex align-items-center gap-3 flex-wrap flex-md-nowrap">
                 <span className="badge bg-primary px-3 py-2">#{id}</span>
                 <div>
-                <h5 className="mb-1">{taskName}</h5>
+                <h5 className={`mb-1 ${isCompleted ? "text-decoration-line-through text-success":""}`}>{taskName}</h5>
                 <small className="text-muted">Due: {dueDate}</small>
                 </div>
             </div>
@@ -17,7 +17,7 @@ const TaskOneLiner = ({id, taskName, dueDate}) => {
                 <button className="btn btn-danger btn-sm">Delete</button>
                 <div className="form-check form-switch">
                 <input className="form-check-input" type="checkbox" id="completedToggle1"/>
-                <label className="form-check-label" for="completedToggle1">Completed</label>
+                <label className="form-check-label" htmlFor="completedToggle1">Completed</label>
                 </div>
             </div>
         </div>

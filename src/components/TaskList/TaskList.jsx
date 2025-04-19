@@ -16,7 +16,11 @@ const TaskList = ({tasks}) => {
                 {
                     tasks.map((task) => {
                         return(
-                        <TaskOneLiner key={task.id} taskName={task.taskName} dueDate={task.dueDate} id={task.id}/>
+                        <TaskOneLiner key={task.id} 
+                                      taskName={task.taskName} 
+                                      dueDate={task.dueDate} 
+                                      id={task.id} 
+                                      isCompleted={task.isCompleted}/>
                         )
                     })
                 }
