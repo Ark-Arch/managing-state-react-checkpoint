@@ -34,6 +34,9 @@ const TaskItem = ({taskId}) => {
         setAppTasks(newTasks)
     }
 
+    function handleDelete(event){
+    }
+
     return (
         <div className="list-group-item d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between py-3 border rounded shadow-sm mb-3">
             <div className="d-flex align-items-center gap-3 flex-wrap flex-md-nowrap">
@@ -49,9 +52,8 @@ const TaskItem = ({taskId}) => {
                 </div>
             </div>
             <div className="d-flex align-items-center gap-2 mt-3 mt-md-0">
-                <button className="btn btn-outline-secondary btn-sm">More</button>
                 <button className="btn btn-warning btn-sm">Edit</button>
-                <button className="btn btn-danger btn-sm">Delete</button>
+                <button className="btn btn-danger btn-sm" onClick={handleDelete}>Delete</button>
                 <div className="form-check form-switch">
                 <input className="form-check-input" type="checkbox" id={`completedToggle${id}`}
                         onChange={handleToggle}/>

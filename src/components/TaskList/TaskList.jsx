@@ -1,15 +1,18 @@
 import {React, useState, useEffect} from 'react'
 import TaskItem from '../TaskItem/TaskItem'
 import { Link } from 'react-router-dom'
+import { TaskContext } from '../../context/taskContext'
+import { useContext } from 'react'
 
 
 const TaskList = () => {
     const [tasks, setTasks] = useState([])
+    const {appTasks} = useContext(TaskContext)
 
     useEffect(()=>{
         const savedTasks = retrieveFromLocalStorage()
         setTasks(savedTasks)
-    }, [])
+    }, [appTasks])
 
     function retrieveFromLocalStorage(){
         return JSON.parse(localStorage.getItem('my-tasks')) || [];
