@@ -1,7 +1,10 @@
 import React from 'react'
 import { useContext } from 'react'
 import { TaskContext } from '../../context/taskContext'
-const TaskItem = ({task}) => {
+const TaskItem = ({taskId}) => {
+    const {appTasks, setAppTasks} = useContext(TaskContext)
+
+    const task = appTasks.find((curTask) => curTask.id === taskId);
 
     const id = task.id
     const taskName = task.taskName
@@ -20,7 +23,15 @@ const TaskItem = ({task}) => {
 
     function handleToggle(event){
         const toggleValue = event.target.checked
-        
+        console.log(appTasks)
+        const newTasks = appTasks.map((curTask) => {
+            if (curTask.id === id) {
+                return {...curTask, isCompleted: toggleValue}
+            }
+            return curTask
+        })
+
+        setAppTasks(newTasks)
     }
 
     return (

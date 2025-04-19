@@ -28,7 +28,7 @@ const TaskList = () => {
                         tasks.map((task) => {
                             return(
                             <TaskItem key={task.id} 
-                                          task={task}/>
+                                          taskId={task.id}/>
                             )
                         })
                     }
