@@ -2,7 +2,7 @@ import {React, useState, useEffect} from 'react'
 import TaskForm from './components/TaskForm/TaskForm'
 import TaskList from './components/TaskList/TaskList'
 import { Routes, Route } from 'react-router-dom'
-
+import ConfirmModal from './components/ConfirmModal/ConfirmModal'
 import { TaskContext } from './context/taskContext'
 
 import { tasks } from './assets/taskData'

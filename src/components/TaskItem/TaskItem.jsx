@@ -1,6 +1,8 @@
 import React from 'react'
 import { useContext } from 'react'
 import { TaskContext } from '../../context/taskContext'
+import ConfirmModal from '../ConfirmModal/ConfirmModal'
+
 const TaskItem = ({taskId, updateTasks}) => {
     const {appTasks, setAppTasks} = useContext(TaskContext)
 
@@ -38,8 +40,13 @@ const TaskItem = ({taskId, updateTasks}) => {
         updateTasks(id)
     }
 
+    function confirmDelete(isAgreed){
+        if (isAgreed) updateTasks(id)
+    }
+
     return (
         <div className="list-group-item d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between py-3 border rounded shadow-sm mb-3">
+            <ConfirmModal confirmDelete={confirmDelete}/>
             <div className="d-flex align-items-center gap-3 flex-wrap flex-md-nowrap">
                 <span className="badge bg-primary px-3 py-2">#{id}</span>
                 <div>
@@ -54,7 +61,10 @@ const TaskItem = ({taskId, updateTasks}) => {
             </div>
             <div className="d-flex align-items-center gap-2 mt-3 mt-md-0">
                 <button className="btn btn-warning btn-sm">Edit</button>
-                <button className="btn btn-danger btn-sm" onClick={handleDelete}>Delete</button>
+
+                <button className="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                    Delete
+                </button>
                 <div className="form-check form-switch">
                 <input className="form-check-input" type="checkbox" id={`completedToggle${id}`}
                         onChange={handleToggle}/>

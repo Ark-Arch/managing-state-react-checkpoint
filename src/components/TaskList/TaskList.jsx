@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { TaskContext } from '../../context/taskContext'
 import { useContext } from 'react'
 
-
 const TaskList = () => {
     const {appTasks, setAppTasks} = useContext(TaskContext)
 
