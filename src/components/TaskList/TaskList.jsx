@@ -20,7 +20,15 @@ const TaskList = () => {
                     <h3 className="mb-0">My To-Do List</h3>
                     <Link to='/add-task'><button className="btn btn-primary px-4">Add</button></Link>
                 </div>
+            { appTasks.length === 0 ? 
+                <div className="d-flex justify-content-center align-items-center bg-light rounded shadow-sm p-5 my-5">
+                    <h2 className="fw-bold text-center m-0" style={{ fontFamily: 'cursive', color: 'black' }}>
+                        Manage your To-Dos
+                        </h2>
+                    </div>
+
                 
+                :           
                 <div className="list-group">
                     {
                         appTasks.map((task) => {
@@ -32,6 +40,7 @@ const TaskList = () => {
                         })
                     }
                 </div>
+            }
             </div>
         </>
     )
