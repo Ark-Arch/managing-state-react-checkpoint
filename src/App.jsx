@@ -8,7 +8,10 @@ import { TaskContext } from './context/taskContext'
 import { tasks } from './assets/taskData'
 
 function App() {
-    const [appTasks, setAppTasks] = useState(tasks)
+    const [appTasks, setAppTasks] = useState(()=>{
+        const stored = localStorage.getItem("my-tasks");
+        return stored ? JSON.parse(stored) : tasks
+    })
 
     useEffect(()=>{
         addToLocalStorage(appTasks)
