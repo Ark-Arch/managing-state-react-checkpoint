@@ -6,18 +6,13 @@ import { useContext } from 'react'
 
 
 const TaskList = () => {
-    const [tasks, setTasks] = useState([])
-    const {appTasks} = useContext(TaskContext)
+    const {appTasks, setAppTasks} = useContext(TaskContext)
 
-    useEffect(()=>{
-        const savedTasks = retrieveFromLocalStorage()
-        setTasks(savedTasks)
-    }, [appTasks])
-
-    function retrieveFromLocalStorage(){
-        return JSON.parse(localStorage.getItem('my-tasks')) || [];
+    function updateTasks (id) {
+        const newTasks = appTasks.filter((currTask) => currTask.id !== id)
+        const resetTasks = newTasks.map((task, index) => ({...task, id:index+1}))
+        setAppTasks(resetTasks)
     }
-
     return (
         <>
             <div className="container my-2">
@@ -28,10 +23,11 @@ const TaskList = () => {
                 
                 <div className="list-group">
                     {
-                        tasks.map((task) => {
+                        appTasks.map((task) => {
                             return(
                             <TaskItem key={task.id} 
-                                          taskId={task.id}/>
+                                          taskId={task.id}
+                                          updateTasks={updateTasks}/>
                             )
                         })
                     }

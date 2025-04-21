@@ -1,7 +1,7 @@
 import React from 'react'
 import { useContext } from 'react'
 import { TaskContext } from '../../context/taskContext'
-const TaskItem = ({taskId}) => {
+const TaskItem = ({taskId, updateTasks}) => {
     const {appTasks, setAppTasks} = useContext(TaskContext)
 
     const task = appTasks.find((curTask) => curTask.id === taskId);
@@ -35,6 +35,7 @@ const TaskItem = ({taskId}) => {
     }
 
     function handleDelete(event){
+        updateTasks(id)
     }
 
     return (
