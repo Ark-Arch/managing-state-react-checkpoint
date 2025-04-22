@@ -1,6 +1,7 @@
 import React from 'react'
 import { useContext } from 'react'
 import { TaskContext } from '../../context/taskContext'
+import { toast } from 'react-toastify'
 
 const TaskItem = ({taskId, openDeleteModal}) => {
     const {appTasks, setAppTasks} = useContext(TaskContext)
@@ -29,6 +30,7 @@ const TaskItem = ({taskId, openDeleteModal}) => {
         const toggleValue = event.target.checked
         const newTasks = appTasks.map((curTask) => {
             if (curTask.id === id) {
+                !isCompleted?toast.success(`You have successfully completed ${curTask.taskName}`):""
                 return {...curTask, isCompleted: toggleValue}
             }
             return curTask

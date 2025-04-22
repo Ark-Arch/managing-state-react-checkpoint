@@ -2,6 +2,8 @@ import { useState } from "react"
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { TaskContext } from "../../context/taskContext";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // role: this component is to add or edit a task
 
@@ -25,6 +27,8 @@ const TaskForm = () => {
     const [status, setStatus] = useState(STATUS.IDLE)
     const [touched, setTouched] = useState({})
 
+    const navigate = useNavigate()
+
     // form validation
     const errors = getErrors(task);
     const isValid = Object.keys(errors).length === 0;
@@ -41,6 +45,7 @@ const TaskForm = () => {
             task.updatedAt = Date.now()
 
             setAppTasks([...appTasks, task])
+            toast.success("A new task has been successfully added!")
             localStorage.setItem("my-tasks",JSON.stringify(appTasks))
             setStatus(STATUS.COMPLETED)
         } else {
@@ -86,7 +91,8 @@ const TaskForm = () => {
 
 
     if (status === STATUS.COMPLETED) {
-        return <h1>TASK SUCCESSFULLY ADDED: <Link to='/task-list'>Back</Link></h1>
+        navigate('/task-list')
+        // return <h1>TASK SUCCESSFULLY ADDED: <Link to='/task-list'>Back</Link></h1>
     }
     return (
         <div className="container mt-5">

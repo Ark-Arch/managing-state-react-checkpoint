@@ -3,17 +3,18 @@ import { Link } from 'react-router-dom'
 import { TaskContext } from '../../context/taskContext'
 import { useContext, useState } from 'react'
 import ConfirmModal from '../ConfirmModal/ConfirmModal'
+import { toast } from 'react-toastify'
 
 const TaskList = () => {
     const {appTasks, setAppTasks} = useContext(TaskContext)
 
     const [selectedTask, setSelectedTask] = useState(null)
-    const [showModal, setShowModal] = useState(false)
 
     function updateTasks (idToDelete) {
         const newTasks = appTasks.filter((currTask) => currTask.id !== idToDelete)
         const resetTasks = newTasks.map((task, index) => ({...task, id:index+1}))
         setAppTasks(resetTasks)
+        toast.success("Task has been deleted successfully!")
     }
 
     function openDeleteModal(task){
