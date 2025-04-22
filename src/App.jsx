@@ -26,6 +26,7 @@ function App() {
             <ToastContainer/>
             <TaskContext.Provider value={{appTasks, setAppTasks}}>
                 <Routes>
+                    <Route path='/' element={<TaskList/>}/>
                     <Route path='/task-list' element={<TaskList/>}/>
                     <Route path='/add-task' element={<TaskForm/>}/>
                 </Routes>
