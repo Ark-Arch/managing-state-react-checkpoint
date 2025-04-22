@@ -1,9 +1,8 @@
 import React from 'react'
 import { useContext } from 'react'
 import { TaskContext } from '../../context/taskContext'
-import ConfirmModal from '../ConfirmModal/ConfirmModal'
 
-const TaskItem = ({taskId, updateTasks}) => {
+const TaskItem = ({taskId, openDeleteModal}) => {
     const {appTasks, setAppTasks} = useContext(TaskContext)
 
     const task = appTasks.find((curTask) => curTask.id === taskId);
@@ -13,6 +12,9 @@ const TaskItem = ({taskId, updateTasks}) => {
     const dueDate = task.dueDate
     const isCompleted = task.isCompleted
 
+    function handleDelete(){
+        openDeleteModal(task)
+    }
 
     function isDeadlinePassed (date_string){
         const today = new Date();
@@ -25,7 +27,6 @@ const TaskItem = ({taskId, updateTasks}) => {
 
     function handleToggle(event){
         const toggleValue = event.target.checked
-        console.log(appTasks)
         const newTasks = appTasks.map((curTask) => {
             if (curTask.id === id) {
                 return {...curTask, isCompleted: toggleValue}
@@ -36,17 +37,8 @@ const TaskItem = ({taskId, updateTasks}) => {
         setAppTasks(newTasks)
     }
 
-    function handleDelete(event){
-        updateTasks(id)
-    }
-
-    function confirmDelete(isAgreed){
-        if (isAgreed) updateTasks(id)
-    }
-
     return (
         <div className="list-group-item d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between py-3 border rounded shadow-sm mb-3">
-            <ConfirmModal confirmDelete={confirmDelete}/>
             <div className="d-flex align-items-center gap-3 flex-wrap flex-md-nowrap">
                 <span className="badge bg-primary px-3 py-2">#{id}</span>
                 <div>
@@ -62,7 +54,12 @@ const TaskItem = ({taskId, updateTasks}) => {
             <div className="d-flex align-items-center gap-2 mt-3 mt-md-0">
                 <button className="btn btn-warning btn-sm">Edit</button>
 
-                <button className="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                <button 
+                    className="btn btn-danger btn-sm"
+                    data-bs-toggle="modal"
+                    data-bs-target="#confirmDeleteModal" 
+                    onClick={handleDelete}
+                    >
                     Delete
                 </button>
                 <div className="form-check form-switch">

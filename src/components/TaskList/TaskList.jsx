@@ -1,17 +1,31 @@
-import {React, useState, useEffect} from 'react'
 import TaskItem from '../TaskItem/TaskItem'
 import { Link } from 'react-router-dom'
 import { TaskContext } from '../../context/taskContext'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
+import ConfirmModal from '../ConfirmModal/ConfirmModal'
 
 const TaskList = () => {
     const {appTasks, setAppTasks} = useContext(TaskContext)
 
-    function updateTasks (id) {
-        const newTasks = appTasks.filter((currTask) => currTask.id !== id)
+    const [selectedTask, setSelectedTask] = useState(null)
+    const [showModal, setShowModal] = useState(false)
+
+    function updateTasks (idToDelete) {
+        const newTasks = appTasks.filter((currTask) => currTask.id !== idToDelete)
         const resetTasks = newTasks.map((task, index) => ({...task, id:index+1}))
         setAppTasks(resetTasks)
     }
+
+    function openDeleteModal(task){
+        setSelectedTask(task);
+    }
+
+    function handleConfirmDelete(isAgreed){
+        if (isAgreed && selectedTask) {
+            updateTasks(selectedTask.id)
+        }
+    }
+
     return (
         <>
             <div className="container my-2">
@@ -34,13 +48,18 @@ const TaskList = () => {
                             return(
                             <TaskItem key={task.id} 
                                           taskId={task.id}
-                                          updateTasks={updateTasks}/>
+                                          openDeleteModal={openDeleteModal}
+                                          />
                             )
                         })
                     }
                 </div>
             }
             </div>
+            <ConfirmModal
+                confirmDelete={handleConfirmDelete}
+                taskName = {selectedTask?.taskName}
+            />
         </>
     )
 }
