@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { TaskContext } from "../../context/taskContext";
@@ -20,14 +20,22 @@ const STATUS = {
     COMPLETED: "COMPLETED"
 }
 
-const TaskForm = () => {
+const TaskForm = ({taskToEdit,onUpdate}) => {
     const {appTasks, setAppTasks} = useContext(TaskContext)
 
-    const [task, setTask] = useState(emptyTask)
+    const [task, setTask] = useState(taskToEdit||emptyTask)
     const [status, setStatus] = useState(STATUS.IDLE)
     const [touched, setTouched] = useState({})
-
     const navigate = useNavigate()
+
+    console.log(taskToEdit)
+
+
+    useEffect(()=> {
+        if(taskToEdit){
+            setTask(taskToEdit)
+        }
+    }, [taskToEdit])
 
     // form validation
     const errors = getErrors(task);
@@ -39,15 +47,22 @@ const TaskForm = () => {
         event.preventDefault();
         setStatus(STATUS.SUBMITTING);
         if (isValid){
-            task.id = appTasks.length + 1
-            task.isCompleted = false
-            task.createdAt = Date.now()
-            task.updatedAt = Date.now()
-
-            setAppTasks([...appTasks, task])
-            toast.success("A new task has been successfully added!")
+            task.updateAt = Date.now();
+            if (task.id){
+                const updatedTasks = appTasks.map((curTask) => curTask.id === task.id ? task:curTask);
+                setAppTasks(updatedTasks);
+                // onUpdate(updatedTasks)
+                toast.success("Task has been updated successfully!");
+            } else {
+                task.id = appTasks.length + 1
+                task.isCompleted = false
+                task.createdAt = Date.now()
+                setAppTasks([...appTasks, task])
+                toast.success("A new task has been successfully added!")    
+            }
             localStorage.setItem("my-tasks",JSON.stringify(appTasks))
             setStatus(STATUS.COMPLETED)
+            navigate('/task-list')
         } else {
             setStatus(STATUS.SUBMITTED)
         }
@@ -90,10 +105,10 @@ const TaskForm = () => {
     }
 
 
-    if (status === STATUS.COMPLETED) {
-        navigate('/task-list')
-        // return <h1>TASK SUCCESSFULLY ADDED: <Link to='/task-list'>Back</Link></h1>
-    }
+    // if (status === STATUS.COMPLETED) {
+    //     navigate('/task-list')
+    //     // return <h1>TASK SUCCESSFULLY ADDED: <Link to='/task-list'>Back</Link></h1>
+    // }
     return (
         <div className="container mt-5">
             <div className="d-flex justify-content-between align-items-center mb-4">

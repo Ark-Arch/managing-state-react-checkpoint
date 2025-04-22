@@ -1,4 +1,5 @@
 import TaskItem from '../TaskItem/TaskItem'
+import TaskForm from '../TaskForm/TaskForm'
 import { Link } from 'react-router-dom'
 import { TaskContext } from '../../context/taskContext'
 import { useContext, useState } from 'react'
@@ -7,8 +8,16 @@ import { toast } from 'react-toastify'
 
 const TaskList = () => {
     const {appTasks, setAppTasks} = useContext(TaskContext)
-
+    const [editingTask, setEditingTask] = useState(null)
     const [selectedTask, setSelectedTask] = useState(null)
+
+    function handleEditClick(task){
+        setEditingTask(task);
+    }
+
+    function handleUpdate(updatedTasks){
+        setAppTasks(updatedTasks)
+    }
 
     function updateTasks (idToDelete) {
         const newTasks = appTasks.filter((currTask) => currTask.id !== idToDelete)
@@ -44,15 +53,18 @@ const TaskList = () => {
                 
                 :           
                 <div className="list-group">
-                    {
+                    { editingTask ? (
+                        <TaskForm taskToEdit={editingTask} onUpdate={handleUpdate} />
+                    ):(
                         appTasks.map((task) => {
                             return(
                             <TaskItem key={task.id} 
                                           taskId={task.id}
                                           openDeleteModal={openDeleteModal}
+                                          onEditClick={handleEditClick}
                                           />
                             )
-                        })
+                        }))
                     }
                 </div>
             }

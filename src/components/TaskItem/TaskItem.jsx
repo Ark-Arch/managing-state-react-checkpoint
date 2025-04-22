@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import { TaskContext } from '../../context/taskContext'
 import { toast } from 'react-toastify'
 
-const TaskItem = ({taskId, openDeleteModal}) => {
+const TaskItem = ({taskId, openDeleteModal, onEditClick}) => {
     const {appTasks, setAppTasks} = useContext(TaskContext)
 
     const task = appTasks.find((curTask) => curTask.id === taskId);
@@ -15,6 +15,10 @@ const TaskItem = ({taskId, openDeleteModal}) => {
 
     function handleDelete(){
         openDeleteModal(task)
+    }
+
+    function handleEdit(){
+        onEditClick(task)
     }
 
     function isDeadlinePassed (date_string){
@@ -54,7 +58,10 @@ const TaskItem = ({taskId, openDeleteModal}) => {
                 </div>
             </div>
             <div className="d-flex align-items-center gap-2 mt-3 mt-md-0">
-                <button className="btn btn-warning btn-sm">Edit</button>
+                <button className="btn btn-warning btn-sm" 
+                        onClick={handleEdit}
+                        >
+                    Edit</button>
 
                 <button 
                     className="btn btn-danger btn-sm"
